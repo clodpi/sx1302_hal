@@ -1252,7 +1252,7 @@ int lgw_receive(uint8_t max_pkt, struct lgw_pkt_rx_s *pkt_data) {
     uint8_t nb_pkt_fetched = 0;
     uint8_t nb_pkt_found = 0;
     uint8_t nb_pkt_left = 0;
-    float current_temperature = 0.0, rssi_temperature_offset = 0.0;
+    float current_temperature = 35.0, rssi_temperature_offset = 0.0;
     /* performances variables */
     struct timeval tm;
 
@@ -1283,13 +1283,6 @@ int lgw_receive(uint8_t max_pkt, struct lgw_pkt_rx_s *pkt_data) {
     if (nb_pkt_fetched > max_pkt) {
         nb_pkt_left = nb_pkt_fetched - max_pkt;
         printf("WARNING: not enough space allocated, fetched %d packet(s), %d will be left in RX buffer\n", nb_pkt_fetched, nb_pkt_left);
-    }
-
-    /* Apply RSSI temperature compensation */
-    res = lgw_get_temperature(&current_temperature);
-    if (res != LGW_I2C_SUCCESS) {
-        printf("ERROR: failed to get current temperature\n");
-        return LGW_HAL_ERROR;
     }
 
     /* Iterate on the RX buffer to get parsed packets */

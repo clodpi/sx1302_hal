@@ -1871,14 +1871,7 @@ int main(int argc, char ** argv)
         } else {
             printf("# GPS sync is disabled\n");
         }
-        pthread_mutex_lock(&mx_concent);
-        i = lgw_get_temperature(&temperature);
-        pthread_mutex_unlock(&mx_concent);
-        if (i != LGW_HAL_SUCCESS) {
-            printf("### Concentrator temperature unknown ###\n");
-        } else {
-            printf("### Concentrator temperature: %.0f C ###\n", temperature);
-        }
+        printf("### Concentrator temperature: %.0f C ###\n", temperature);
         printf("##### END #####\n");
 
         /* generate a JSON report (will be sent to server by upstream thread) */
